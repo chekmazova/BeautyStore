@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Beauty Store1</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="action_search">Search</string>
+    <string name="action_cart">Shopping Cart</string>
+    <string name="action_settings">Options</string>
+    <string name="product_info">This is a 2000 watt hair dryer with six switch combinations, three heat setting and two speed settings.
+        Cool shot
+        Removable filter
+        Hang loop
+        2 Year Warranty
+    This is a 2000 watt hair dryer with six switch combinations, three heat setting and two speed settings.
+        Cool shot
+        Removable filter
+        Hang loop
+        2 Year Warranty
+    This is a 2000 watt hair dryer with six switch combinations, three heat setting and two speed settings.
+        Cool shot
+        Removable filter
+        Hang loop
+        2 Year Warranty
+    This is a 2000 watt hair dryer with six switch combinations, three heat setting and two speed settings.
+        Cool shot
+        Removable filter
+        Hang loop
+        2 Year Warranty</string>
+</resources>
