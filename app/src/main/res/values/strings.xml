@@ -7,6 +7,11 @@
     <string name="action_search">Search</string>
     <string name="action_cart">Shopping Cart</string>
     <string name="action_settings">Options</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
     <string name="product_info">This is a 2000 watt hair dryer with six switch combinations, three heat setting and two speed settings.
         Cool shot
         Removable filter
@@ -27,4 +32,7 @@
         Removable filter
         Hang loop
         2 Year Warranty</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

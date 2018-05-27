@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ListView listView = (ListView) findViewById(R.id.lw_categories);
+        final ListView listView = findViewById(R.id.lw_categories);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, categories);
         listView.setAdapter(adapter);
 
@@ -64,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.search:
                 return true;
             case R.id.cart:
-                return true;
+                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                startActivity(intent);
+                break;
             case R.id.options:
                 return true;
         }
