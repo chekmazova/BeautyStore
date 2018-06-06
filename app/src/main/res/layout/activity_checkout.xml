@@ -94,7 +94,7 @@
 
             <fragment
                 android:id="@+id/fragment_delivery"
-                android:name="com.example.android.beautystore1.DeliveryFragment"
+                android:name="com.example.android.beautystore1.Fragments.DeliveryFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

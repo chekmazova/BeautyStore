@@ -1,4 +1,4 @@
-package com.example.android.beautystore1;
+package com.example.android.beautystore1.Adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.android.beautystore1.R;
 
 public class CustomListAdapter extends ArrayAdapter {
 

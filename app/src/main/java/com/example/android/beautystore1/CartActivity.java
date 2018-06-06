@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.android.beautystore1.Adapters.CustomListAdapter;
+
 public class CartActivity extends AppCompatActivity {
     String[] productArray = {"Turbo Power Twin Turbo 2800", "Pro Thermal Styler"};
     String[] priceArray = {"3500 RUR", "4500 RUR" };

@@ -1,4 +1,4 @@
-package com.example.android.beautystore1;
+package com.example.android.beautystore1.Adapters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import com.example.android.beautystore1.ProductActivity;
+import com.example.android.beautystore1.R;
 
 import java.util.ArrayList;
 

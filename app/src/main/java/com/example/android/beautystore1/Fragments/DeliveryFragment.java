@@ -1,4 +1,4 @@
-package com.example.android.beautystore1;
+package com.example.android.beautystore1.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,15 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.beautystore1.R;
 
 
-public class PickupFragment extends Fragment {
+public class DeliveryFragment extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pickup, container, false);
+        return inflater.inflate(R.layout.fragment_delivery, container, false);
     }
+
 }

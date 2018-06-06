@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+import com.example.android.beautystore1.Adapters.GridAdapter;
+
 import java.util.ArrayList;
 
 public class CategoryActivity extends AppCompatActivity {
