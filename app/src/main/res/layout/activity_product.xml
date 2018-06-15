@@ -48,6 +48,7 @@
                     android:layout_gravity="bottom"
                     android:baselineAlignBottom="false"
                     android:clickable="true"
+                    android:focusable="true"
                     android:onClick="onClickShare"
                     app:srcCompat="@drawable/ic_icon_share" />
             </LinearLayout>
@@ -81,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="$39"
+                android:text="1895 RUR"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold" />

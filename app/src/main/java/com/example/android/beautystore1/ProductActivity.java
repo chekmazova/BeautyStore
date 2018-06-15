@@ -10,12 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class ProductActivity extends AppCompatActivity {
+public class ProductActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        getSupportActionBar().setTitle("Hairdressing");
 
         Button button = findViewById(R.id.btnBuy);
         button.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +31,7 @@ public class ProductActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
+    //Function to display dialog box - continue shopping or checkout
     public void customDialog(String title, String message){
         final AlertDialog.Builder builderBox = new AlertDialog.Builder(this);
         builderBox.setTitle(title);
@@ -54,6 +56,7 @@ public class ProductActivity extends AppCompatActivity {
         builderBox.show();
     }
 
+    //displays return arrow
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -63,6 +66,7 @@ public class ProductActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //share function
     public void onClickShare(View view) {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");

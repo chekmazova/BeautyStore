@@ -10,14 +10,17 @@ import android.widget.Button;
 import com.example.android.beautystore1.Fragments.DeliveryFragment;
 import com.example.android.beautystore1.Fragments.PickupFragment;
 
-public class CheckoutActivity extends AppCompatActivity {
+public class CheckoutActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+        getSupportActionBar().setTitle("Checkout");
 
-        //getActionBar().setTitle("Checkout");
+        //Arrow back
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     public void onChange (View view){

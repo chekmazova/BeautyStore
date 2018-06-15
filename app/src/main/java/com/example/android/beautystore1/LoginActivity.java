@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Login to your Account");
 
         Button button = findViewById(R.id.btn_register);
         button.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +36,18 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
 
     }
+
+    //displays return arrow
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //Shared preferences
     public void saveInfo (View view){
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();

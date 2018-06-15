@@ -23,9 +23,10 @@
         <activity android:name=".CartActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".CheckoutActivity">
-
-        </activity>
+        <activity android:name=".CheckoutActivity" />
+        <activity android:name=".ManageProductsActivity" />
+        <activity android:name=".ManageStoreInfoActivity" />
+        <activity android:name=".AccountDetailsActivity"/>
     </application>
 
 </manifest>

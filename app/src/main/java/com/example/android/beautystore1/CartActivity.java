@@ -10,9 +10,9 @@ import android.widget.ListView;
 
 import com.example.android.beautystore1.Adapters.CustomListAdapter;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends MainActivity {
     String[] productArray = {"Turbo Power Twin Turbo 2800", "Pro Thermal Styler"};
-    String[] priceArray = {"3500 RUR", "4500 RUR" };
+    String[] priceArray = {"1895 RUR", "5505 RUR" };
     Integer[] quantityArray = {1, 1};
     Integer[] imgArray = {R.drawable.ic_id1, R.drawable.ic_id4};
     ListView listView;
@@ -21,6 +21,9 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Shopping Bag");
 
         CustomListAdapter adapter = new CustomListAdapter(this, R.layout.cart_item_layout, productArray,
                 priceArray, quantityArray, imgArray);
@@ -35,9 +38,6 @@ public class CartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override

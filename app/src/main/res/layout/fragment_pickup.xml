@@ -3,23 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorStandardBackground"
     tools:context=".Fragments.PickupFragment">
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!--<TextView-->
+                <!--android:id="@+id/textView6"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="18dp"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:textStyle="bold"-->
+                <!--android:text="Pick Up" />-->
+
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginBottom="10dp"
+                android:textSize="16sp"
+                android:text="Choose the most convenient location to puck up your order" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -30,21 +44,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="RadioButton" />
+                    android:text="32B Oktyabrskoy Revolutsyi street, Sevastopol, Ukraine, tel. +7 (978) 709-46-60 " />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="Store location on the map"
+                    android:src="@drawable/ic_map_sevast" />
 
                 <RadioButton
                     android:id="@+id/radioButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="RadioButton" />
+                    android:text="55 Sevatopolskaya street, Simferopol, Russia, tel. +7 (978) 263-58-20" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:contentDescription="Store location on the map"
+                    android:src="@drawable/ic_map_sevast" />
             </RadioGroup>
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_map_sevastopol" />
+
 
         </LinearLayout>
     </ScrollView>

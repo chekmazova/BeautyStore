@@ -7,12 +7,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().setTitle("Registration");
 
         Button button = findViewById(R.id.register);
         button.setOnClickListener(new View.OnClickListener() {
@@ -23,8 +24,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
-        getSupportActionBar().setTitle("Registration");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
