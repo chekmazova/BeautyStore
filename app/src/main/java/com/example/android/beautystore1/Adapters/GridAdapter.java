@@ -9,10 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.beautystore1.ProductActivity;
+import com.example.android.beautystore1.Activities.ClientActivities.ProductActivity;
 import com.example.android.beautystore1.R;
-
-import java.util.ArrayList;
 
 public class GridAdapter extends BaseAdapter{
     private final String[] productArray;

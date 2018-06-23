@@ -1,14 +1,12 @@
-package com.example.android.beautystore1;
+package com.example.android.beautystore1.Activities.ClientActivities;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.GridView;
 
 import com.example.android.beautystore1.Adapters.GridAdapter;
-
-import java.util.ArrayList;
+import com.example.android.beautystore1.R;
 
 public class CategoryActivity extends MainActivity {
 

@@ -8,10 +8,27 @@
     <string name="action_cart">Shopping Cart</string>
     <string name="action_settings">Options</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_birth_date">Date of Birth</string>
+    <string name="text_register">Register</string>
+    <string name="text_staff_signin">Sign In as a staff</string>
+    <string name="newsletter_subscription">I would like to receive marketing communications via e-mail</string>
+    <string name="error_message_name">Enter Your Name</string>
+    <string name="error_message_email">Enter Valid Email</string>
+    <string name="error_message_password">Enter Password</string>
+    <string name="error_email_exists">Email Already Exists</string>
+    <string name="error_valid_email_password">Wrong Email or Password</string>
+    <string name="success_message">Registration Successful</string>
+
+
     <string name="product_info">This is a 2000 watt hair dryer with six switch combinations, three heat setting and two speed settings.
         Cool shot
         Removable filter

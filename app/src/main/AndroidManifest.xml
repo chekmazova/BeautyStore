@@ -11,22 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.ClientActivities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CategoryActivity" />
-        <activity android:name=".ProductActivity" />
-        <activity android:name=".CartActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".CheckoutActivity" />
-        <activity android:name=".ManageProductsActivity" />
-        <activity android:name=".ManageStoreInfoActivity" />
-        <activity android:name=".AccountDetailsActivity"/>
+        <activity android:name=".Activities.ClientActivities.CategoryActivity" />
+        <activity android:name=".Activities.ClientActivities.ProductActivity" />
+        <activity android:name=".Activities.ClientActivities.CartActivity" />
+        <activity android:name=".Activities.ClientActivities.LoginActivity" />
+        <activity android:name=".Activities.ClientActivities.RegisterActivity" />
+        <activity android:name=".Activities.ClientActivities.CheckoutActivity" />
+        <activity android:name=".Activities.ManagementActivities.ManageProductsActivity" />
+        <activity android:name=".Activities.ManagementActivities.ManageStoreInfoActivity" />
+        <activity android:name=".Activities.ClientActivities.AccountDetailsActivity" />
     </application>
 
 </manifest>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".Activities.ClientActivities.LoginActivity">
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -28,10 +28,12 @@
             android:paddingTop="50dp">
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputLayoutEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
 
-                <AutoCompleteTextView
+                <android.support.design.widget.TextInputEditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -42,20 +44,20 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
-
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputLayoutPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_height="wrap_content">
 
-                <EditText
+                <android.support.design.widget.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:hint="@string/prompt_password"
                     android:imeActionId="6"
                     android:imeActionLabel="@string/action_sign_in_short"
@@ -63,7 +65,6 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
-
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -74,7 +75,7 @@
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
                 android:layout_marginTop="100dp"
-                android:background="#c84343"
+                android:background="@color/colorPrimaryRed"
                 android:text="@string/action_sign_in"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp"
@@ -89,21 +90,19 @@
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
                 android:layout_marginTop="16dp"
-                android:background="#c84343"
+                android:background="@color/colorGrey"
                 android:text="@string/action_register"
-                android:textColor="@android:color/background_light"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textViewLinkStaffLogin"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:linksClickable="true"
-                android:text="Sign In as a staff" />
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/text_staff_signin"
+                android:textSize="16dp" />
 
         </LinearLayout>
     </ScrollView>
