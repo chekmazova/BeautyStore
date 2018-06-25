@@ -1,5 +1,6 @@
 package com.example.android.beautystore1.Activities.ClientActivities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -7,19 +8,44 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.android.beautystore1.Database.DatabaseHelper;
+import com.example.android.beautystore1.Models.Product;
 import com.example.android.beautystore1.R;
+import com.squareup.picasso.Picasso;
 
 public class ProductActivity extends MainActivity {
+
+    Context context;
+    ImageView productIMG;
+    TextView productName, productBrand, productPrice, productInfo;
+    Button btnBuy;
+
+    int productID;
+    DatabaseHelper databaseHelper;
+    Product selectedProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
-        getSupportActionBar().setTitle("Hairdressing");
 
-        Button button = findViewById(R.id.btnBuy);
-        button.setOnClickListener(new View.OnClickListener() {
+        //get the intent extra from the CategoryActivity
+        Intent receivedIntent = getIntent();
+
+        //now get the productID we passed as an extra
+        productID = receivedIntent.getIntExtra("ID", -1); //NOTE: -1 is just a default value if the ID does not exist
+
+        initViews();
+        initObjects();
+
+        selectedProduct = databaseHelper.getProduct(productID);
+
+        getDataFromSQLite();
+
+        btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 customDialog("Item added to cart", "Do you wish to continue shopping?");
@@ -29,6 +55,34 @@ public class ProductActivity extends MainActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(selectedProduct.getName());
+    }
+
+    private void initViews(){
+        productName = findViewById(R.id.txtProductName);
+        productBrand = findViewById(R.id.txtProductBrand);
+        productIMG = findViewById(R.id.imgProduct);
+        productPrice = findViewById(R.id.txtProductPrice);
+        productInfo = findViewById(R.id.txtProductDescription);
+        btnBuy = findViewById(R.id.btnBuy);
+    }
+
+    private void initObjects(){
+        databaseHelper = new DatabaseHelper(this);
+        selectedProduct = new Product();
+        context = ProductActivity.this;
+
+    }
+
+    private void getDataFromSQLite(){
+        Picasso.with(context)
+                .load(selectedProduct.getImageURL())
+                .placeholder(R.drawable.ic_action_name)
+                .into(productIMG);
+        productName.setText(selectedProduct.getName());
+        productBrand.setText(selectedProduct.getBrand());
+        productPrice.setText(selectedProduct.getPrice());
+        productInfo.setText(selectedProduct.getDescription());
     }
 
     //Function to display dialog box - continue shopping or checkout

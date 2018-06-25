@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
 
     InputValidation inputValidation;
     DatabaseHelper mDatabaseHelper;
-    Customer mCustomer;
 
     String email;
     String hashPass;

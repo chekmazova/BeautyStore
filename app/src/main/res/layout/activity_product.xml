@@ -26,7 +26,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/imgProduct"
                     android:layout_width="250dp"
                     android:layout_height="250dp"
                     android:layout_gravity="center"
@@ -35,14 +35,14 @@
                     tools:layout_width="250dp" />
 
                 <ImageView
-                    android:id="@+id/imageView7"
+                    android:id="@+id/imgLike"
                     android:layout_width="46dp"
                     android:layout_height="46dp"
                     android:layout_gravity="bottom"
                     app:srcCompat="@drawable/ic_icon_like" />
 
                 <ImageView
-                    android:id="@+id/imageView8"
+                    android:id="@+id/imgShare"
                     android:layout_width="44dp"
                     android:layout_height="48dp"
                     android:layout_gravity="bottom"
@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Basic-2 2000"
+                    android:text="Name"
                     android:textAllCaps="true"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textSize="16sp"
@@ -71,18 +71,18 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/txtProductBrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Professional Hair dryer 2000W Green"
+                android:text="Brand"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/txtProductPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="1895 RUR"
+                android:text="Price"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -111,10 +111,10 @@
 
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/txtProductDescription"
                 android:layout_width="match_parent"
                 android:layout_height="84dp"
-                android:text="@string/product_info" />
+                android:text="Product info" />
         </LinearLayout>
     </ScrollView>
 

@@ -14,6 +14,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.android.beautystore1.Activities.ManagementActivities.ManageProductsActivity;
 import com.example.android.beautystore1.Database.DatabaseHelper;
 import com.example.android.beautystore1.Activities.ManagementActivities.ManageStoreInfoActivity;
 import com.example.android.beautystore1.Models.Category;
@@ -38,51 +39,6 @@ public class MainActivity extends AppCompatActivity {
         databaseHelper.getWritableDatabase();
 
         populateListView();
-
-//        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, categories);
-//        listView.setAdapter(adapter);
-//
-////        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-////            @Override
-////            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-////                String CategoryName = adapterView.getItemAtPosition(position).toString();
-////                Log.d(TAG, "onItemClick: You clicked on "+name);
-////
-////                Cursor data = mDatabaseHelper.getItemId(name); //get the ID associated with that name
-////                int itemID = -1;
-////                while (data.moveToNext()){
-////                    itemID = data.getInt(0);
-////                }
-////                if (itemID > -1){
-////                    Log.d(TAG, "onItemClick: The ID is: " + itemID);
-////                    Intent editScreenIntent = new Intent(ListDataActivity.this, EditDataActivity.class);
-////                    editScreenIntent.putExtra("ID", itemID);
-////                    editScreenIntent.putExtra("name", name);
-////                    startActivity(editScreenIntent);
-////                } else {
-////                    toastMessage("No ID associated with that name");
-////                }
-////            }
-////        });
-//
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    String selectedCategory = listView.getSelectedItem().toString();
-//                    databaseHelper.Open();
-//                    Cursor cursor_categoryID = databaseHelper.fetch_categoryByName(selectedCategory);
-//                    if (cursor_categoryID.getCount()>0){
-//                        selected_categoryID = cursor_categoryID.getInt(0);
-//                        toastMessage("" + selected_categoryID);
-////                        Intent intentProductList = new Intent(view.getContext(), CategoryActivity.class);
-//////                        intentProductList.putExtra("CategoryID", selected_categoryID);
-//////                        intentProductList.putExtra("CategoryName", selectedCategory);
-////                        startActivity(intentProductList);
-//                    }
-//                    databaseHelper.Close();
-//            }
-//        });
-
     }
 
     private void populateListView() {
@@ -96,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             //then add it to the ArrayList
             listCategories.add(cursor.getString(1));
         }
+
         //Create ListAdapter and set the adapter
         final ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listCategories);
         listView.setAdapter(adapter);
@@ -107,14 +64,19 @@ public class MainActivity extends AppCompatActivity {
                 String category_name = adapterView.getItemAtPosition(position).toString();
                 Log.d(TAG, "onItemClick: You clicked on "+category_name);
 
-                Cursor data = databaseHelper.fetch_categoryByName(category_name); //get the ID associated with that name
+                databaseHelper.Open();
+                Cursor cursor_categoryID = databaseHelper.fetch_categoryByName(category_name); //get the ID associated with that name
                 int categoryID = -1;
-                while (data.moveToNext()){
-                    categoryID = data.getInt(0);
+                if (cursor_categoryID.getCount()>0){
+                    categoryID = cursor_categoryID.getInt(0);
+                    toastMessage(""+categoryID);
                 }
+                databaseHelper.Close();
+
                 if (categoryID > -1){
                     Log.d(TAG, "onItemClick: The ID is: " + categoryID);
                     Intent viewCategoryIntent = new Intent(MainActivity.this, CategoryActivity.class);
+                    //Passing the category ID and name to another Activity
                     viewCategoryIntent.putExtra("ID", categoryID);
                     viewCategoryIntent.putExtra("name", category_name);
                     startActivity(viewCategoryIntent);

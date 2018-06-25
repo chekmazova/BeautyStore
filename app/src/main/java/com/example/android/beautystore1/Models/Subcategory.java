@@ -3,12 +3,15 @@ package com.example.android.beautystore1.Models;
 public class Subcategory {
     private int subcategory_id;
     private String subcategory_name;
-    private Category mCategory;
+    private int categoryID;
 
-    public Subcategory(int subcategory_id, String subcategory_name, Category category) {
+    public Subcategory() {
+    }
+
+    public Subcategory(int subcategory_id, String subcategory_name, int categoryID) {
         this.subcategory_id = subcategory_id;
         this.subcategory_name = subcategory_name;
-        mCategory = category;
+        this.categoryID = categoryID;
     }
 
     public int getSubcategory_id() {
@@ -27,13 +30,11 @@ public class Subcategory {
         this.subcategory_name = subcategory_name;
     }
 
-    public Category getCategory() {
-        return mCategory;
+    public int getCategoryID() {
+        return categoryID;
     }
 
-    public void setCategory(Category category) {
-        mCategory = category;
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
     }
-
-
 }

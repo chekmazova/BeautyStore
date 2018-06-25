@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.android.beautystore1.Database.DatabaseHelper;
 import com.example.android.beautystore1.Models.Category;
 import com.example.android.beautystore1.Models.Store;
+import com.example.android.beautystore1.Models.Subcategory;
 import com.example.android.beautystore1.R;
 
 import java.util.ArrayList;
@@ -49,36 +50,36 @@ public class ManageStoreInfoActivity extends AppCompatActivity {
         mCategoryArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mCategoryArrayList);
         databaseHelper = new DatabaseHelper(this);
 
-//        //launching a spinner
-//        databaseHelper.Open();
-//        Cursor cursor = databaseHelper.getAllCategories();
-//        while (cursor.moveToNext()){
-//            selection = cursor.getString(1);
-//            mCategoryArrayList.add(selection);
-//        }
-//        mSpinner.setAdapter(mCategoryArrayAdapter);
-//        databaseHelper.Close();
-//
-//        //set spinner onClickListener
-//        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                selectedCategory = mSpinner.getSelectedItem().toString();
-//
-//                databaseHelper.Open();
-//                Cursor cursor_categoryID = databaseHelper.fetch_categoryByName(selectedCategory);
-//                if (cursor_categoryID.getCount()>0){
-//                    selected_categoryID = cursor_categoryID.getInt(0);
-//                    toastMessage("" + selected_categoryID);
-//                }
-//                databaseHelper.Close();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+        //launching a spinner
+        databaseHelper.Open();
+        Cursor cursor = databaseHelper.getAllCategoriesCursor();
+        while (cursor.moveToNext()){
+            selection = cursor.getString(1);
+            mCategoryArrayList.add(selection);
+        }
+        mSpinner.setAdapter(mCategoryArrayAdapter);
+        databaseHelper.Close();
+
+        //set spinner onClickListener
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedCategory = mSpinner.getSelectedItem().toString();
+
+                databaseHelper.Open();
+                Cursor cursor_categoryID = databaseHelper.fetch_categoryByName(selectedCategory);
+                if (cursor_categoryID.getCount()>0){
+                    selected_categoryID = cursor_categoryID.getInt(0);
+                    toastMessage("" + selected_categoryID);
+                }
+                databaseHelper.Close();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
  }
 
     public void btnAddCategory (View view){
@@ -96,13 +97,19 @@ public class ManageStoreInfoActivity extends AppCompatActivity {
     }
 
     public void btnAddSubcategory (View view){
-        String subcat_name = subcategory_name.getText().toString();
-        int categoryID = selected_categoryID;
 
-        //Subcategory subcategory = new Subcategory(subcat_name, categoryID);
-
+        Subcategory subcategory = new Subcategory();
         databaseHelper.Open();
-
+        subcategory.setSubcategory_name(subcategory_name.getText().toString());
+        subcategory.setCategoryID(selected_categoryID);
+        boolean status = databaseHelper.insert_subcategory(subcategory);
+        databaseHelper.Close();
+        if (status==true){
+            Toast.makeText(ManageStoreInfoActivity.this, "Subcategory added", Toast.LENGTH_SHORT).show();
+        } else{
+            Toast.makeText(ManageStoreInfoActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        }
+        subcategory_name.setText("");
     }
 
     public void btnAddStore (View view){

@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //database name
     private static String DATABASE_NAME = "BeautyStore.db";
     //database version
-    private static int DATABASE_VERSION = 6;
+    private static int DATABASE_VERSION = 11;
 
     //Category table
     private static final String TABLE_CATEGORY = "tbCategory";
@@ -61,6 +61,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_VOUCHER_START_DATE = "voucher_start_date";
     private static final String COLUMN_VOUCHER_END_DATE = "voucher_end_date";
 
+    //Product table
+    private static final String TABLE_PRODUCT = "tbProduct";
+    private static final String COLUMN_PRODUCT_ID = "product_id";
+    private static final String COLUMN_PRODUCT_NAME = "product_name";
+    private static final String COLUMN_PRODUCT_BRAND = "product_brand";
+    private static final String COLUMN_PRODUCT_DESCRIPTION = "product_description";
+    private static final String COLUMN_PRODUCT_SUBCATEGORY = "product_subcategory";
+    private static final String COLUMN_PRODUCT_IMG = "product_img";
+    private static final String COLUMN_PRODUCT_VOLUME = "product_volume";
+    private static final String COLUMN_PRODUCT_PRICE = "product_price";
+    private static final String COLUMN_PRODUCT_STATUS = "product_status";
 
     //create table sql query
     private String CREATE_CATEGORY_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
@@ -75,12 +86,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_STORE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_STORE_ADDRESS + " TEXT,"
             + COLUMN_STORE_WORKING_HOURS + " TEXT,"+ COLUMN_STORE_PHONE_NUMBER + " TEXT" + ")";
 
-    //OK
-
     private String CREATE_VOUCHER_TABLE = "CREATE TABLE " + TABLE_VOUCHER + "("
             + COLUMN_VOUCHER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_VOUCHER_NAME + " TEXT,"
             + COLUMN_VOUCHER_DISCOUNT + " DOUBLE,"+ COLUMN_VOUCHER_START_DATE + " DATE," + COLUMN_VOUCHER_END_DATE + " DATE" + ")";
-
 
     private String CREATE_CUSTOMER_TABLE = "CREATE TABLE " + TABLE_CUSTOMER + "("
             + COLUMN_CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_CUSTOMER_FIRST_NAME + " TEXT,"
@@ -88,6 +96,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_CUSTOMER_PHONE + " TEXT,"+ COLUMN_CUSTOMER_PASSWORD + " TEXT,"
             + COLUMN_CUSTOMER_PROMO + " INTEGER, FOREIGN KEY(" +COLUMN_CUSTOMER_PROMO +") REFERENCES " +
             TABLE_VOUCHER +"("+ COLUMN_VOUCHER_ID + ") ON UPDATE CASCADE" + ")";
+
+    //OK
+
+    private String CREATE_PRODUCT_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PRODUCT + "("
+            + COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_PRODUCT_NAME + " TEXT,"
+            + COLUMN_PRODUCT_BRAND + " TEXT,"+ COLUMN_PRODUCT_DESCRIPTION + " TEXT,"
+            + COLUMN_PRODUCT_SUBCATEGORY + " INTEGER,"+ COLUMN_PRODUCT_IMG + " TEXT,"
+            + COLUMN_PRODUCT_VOLUME + " TEXT," + COLUMN_PRODUCT_PRICE + " TEXT,"
+            + COLUMN_PRODUCT_STATUS + " INTEGER, FOREIGN KEY(" +COLUMN_PRODUCT_SUBCATEGORY +") REFERENCES " +
+            TABLE_SUBCATEGORY +"("+ COLUMN_SUBCATEGORY_ID + ") ON UPDATE CASCADE" + ")";
 
 
 //    private static String DATABASE_NAME = "BeautyStore.db";
@@ -130,6 +148,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             toastMessage("Promo Table CREATED");
             db.execSQL(CREATE_CUSTOMER_TABLE);
             toastMessage("Customer Table CREATED");
+            db.execSQL(CREATE_PRODUCT_TABLE);
+            toastMessage("Product Table CREATED");
 
 //
 //            db.execSQL("create table " + table_2 + "(ID integer PRIMARY KEY AUTOINCREMENT, product_name varchar(225), brand_id integer, " +
@@ -143,22 +163,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                    "staff_password varchar(10))");
 //            Toast.makeText(context, "Staff Table CREATED", Toast.LENGTH_SHORT).show();
 //
-//            db.execSQL("create table " + table_17 + "(ID integer PRIMARY KEY AUTOINCREMENT, city varchar(30)," +
-//                    "suburb varchar(30), street varchar(50), house varchar(10), flat varchar(10), " +
-//                    "postal_code varchar(10))");
-//            Toast.makeText(context, "Address Table CREATED", Toast.LENGTH_SHORT).show();
-//
-//
 //            db.execSQL("create table " + table_8 + "(ID integer PRIMARY KEY AUTOINCREMENT, product_id integer, " +
 //                    " store_id integer, quantity integer, " +
 //                    "FOREIGN KEY(product_id) REFERENCES  tbProduct (ID) ON UPDATE CASCADE," +
 //                    "FOREIGN KEY(store_id) REFERENCES  tbStore (ID) ON UPDATE CASCADE)");
 //            Toast.makeText(context, "Inventory Table CREATED", Toast.LENGTH_SHORT).show();
-//
-//
-//            db.execSQL("create table " + table_9 + "(ID integer PRIMARY KEY AUTOINCREMENT, voucher_name varchar(50)," +
-//                    "discount double, start_date date, end_date date)");
-//            Toast.makeText(context, "Promo Table CREATED", Toast.LENGTH_SHORT).show();
 //
 //
 //            db.execSQL("create table " + table_16 + "(ID integer PRIMARY KEY AUTOINCREMENT, delivery_type varchar(50)," +
@@ -220,25 +229,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_STORE);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_VOUCHER);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_CUSTOMER);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_PRODUCT);
 
-
-
-//        db.execSQL("drop table if exists "+ table_5);
-//        db.execSQL("drop table if exists "+ table_2);
-//        db.execSQL("drop table if exists "+ table_7);
-//        db.execSQL("drop table if exists "+ table_17);
-//        db.execSQL("drop table if exists "+ table_6);
-//        db.execSQL("drop table if exists "+ table_8);
-//        db.execSQL("drop table if exists "+ table_9);
-//        db.execSQL("drop table if exists "+ table_16);
-//        db.execSQL("drop table if exists "+ table_1);
-//        db.execSQL("drop table if exists "+ table_10);
-//        db.execSQL("drop table if exists "+ table_11);
-//        db.execSQL("drop table if exists "+ table_13);
-//        db.execSQL("drop table if exists "+ table_14);
-//        db.execSQL("drop table if exists "+ table_15);
-//        db.execSQL("drop table if exists "+ table_12);
-        // Toast.makeText(context, "Category Table is Updated", Toast.LENGTH_SHORT).show();
         onCreate(db);
     }
 
@@ -282,7 +274,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // query the Category table
-
         Cursor cursor = db.query(TABLE_CATEGORY, //Table to query
                 columns,
                 null,
@@ -298,7 +289,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 category.setCategory_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_ID))));
                 category.setName(cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_NAME)));
 
-                // Adding user record to list
+                // Adding category record to list
                 categoryList.add(category);
             } while (cursor.moveToNext());
         }
@@ -321,11 +312,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Extract category ID using the category name fetched from spinner
-     * @param subjectName
+     * @param categoryName
      * @return
      */
-    public Cursor fetch_categoryByName (String subjectName){
-        Cursor cursor = db.query(TABLE_CATEGORY, null, COLUMN_CATEGORY_NAME + "=?", new String[]{subjectName+""},null,null,null);
+    public Cursor fetch_categoryByName (String categoryName){
+        Cursor cursor = db.query(TABLE_CATEGORY, null, COLUMN_CATEGORY_NAME + "=?", new String[]{categoryName+""},null,null,null);
+        if (cursor!=null){
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
+    /**
+     * Method to add new subcategory to database
+     * @param subcategory
+     * @return
+     */
+    public boolean insert_subcategory (Subcategory subcategory){
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_SUBCATEGORY_NAME, subcategory.getSubcategory_name());
+        cv.put(COLUMN_CATEGORY_ID_FK, subcategory.getCategoryID());
+        long status = db.insert(TABLE_SUBCATEGORY, null, cv);
+        if (status!=-1){return true;}
+        else {return false;}
+    }
+
+    /**
+     * Method to display all subcategories from the table
+     * @return cursor
+     */
+    public Cursor getAllSubcategoriesCursor(){
+        Cursor cursor;
+        cursor = db.rawQuery("select * from " + TABLE_SUBCATEGORY, null); //null - additional parameters
+        return cursor;
+    }
+
+    /**
+     * Extract subcategory ID using the category name fetched from spinner
+     * @param subcatName
+     * @return
+     */
+    public Cursor fetch_subcategoryByName (String subcatName){
+        Cursor cursor = db.query(TABLE_SUBCATEGORY, null, COLUMN_SUBCATEGORY_NAME
+                + "=?", new String[]{subcatName+""},null,null,null);
         if (cursor!=null){
             cursor.moveToFirst();
         }
@@ -348,27 +377,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Method to add new subcategory to database
-     * @param category
-     * @param subcategory
-     * @return
-     */
-    public boolean insert_subcategory (Category category, Subcategory subcategory){
-        ContentValues cv = new ContentValues();
-        cv.put(COLUMN_CATEGORY_ID, category.getCategory_id());
-        cv.put(COLUMN_CATEGORY_NAME, subcategory.getSubcategory_name());
-        long status = db.insert(TABLE_SUBCATEGORY, null, cv);
-        if (status!=-1){return true;}
-        else {return false;}
-    }
-
-
-    /**
      * Method to register a new customer in database
      * @param customer
      * @return
      */
     public boolean insert_customer(Customer customer){
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_CUSTOMER_FIRST_NAME, customer.getFirst_name());
         cv.put(COLUMN_CUSTOMER_LAST_NAME, customer.getLast_name());
@@ -378,12 +392,201 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Inserting Row
         Long status = db.insert(TABLE_CUSTOMER, null, cv);
+        db.close();
         if (status != -1){
             return true;
         } else {
             return false;
         }
     }
+
+    /**
+     * Method to create new product
+     * @param product
+     * @return
+     */
+    public boolean addProduct (Product product){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_PRODUCT_NAME, product.getName());
+        cv.put(COLUMN_PRODUCT_BRAND, product.getBrand());
+        cv.put(COLUMN_PRODUCT_DESCRIPTION, product.getDescription());
+        cv.put(COLUMN_PRODUCT_SUBCATEGORY, product.getSubcategoryID());
+        cv.put(COLUMN_PRODUCT_IMG, product.getImageURL());
+        cv.put(COLUMN_PRODUCT_PRICE, product.getPrice());
+        cv.put(COLUMN_PRODUCT_VOLUME, product.getVolume());
+        cv.put(COLUMN_PRODUCT_STATUS, product.isInStock());
+
+        // Inserting Row
+        Long status = db.insert(TABLE_PRODUCT, null, cv);
+        db.close();
+        if (status != -1){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Method to fetch all products and read their records
+     * @return
+     */
+    public List<Product> getAllProducts() {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_PRODUCT_ID,
+                COLUMN_PRODUCT_NAME,
+                COLUMN_PRODUCT_BRAND,
+                COLUMN_PRODUCT_DESCRIPTION,
+                COLUMN_PRODUCT_SUBCATEGORY,
+                COLUMN_PRODUCT_IMG,
+                COLUMN_PRODUCT_VOLUME,
+                COLUMN_PRODUCT_PRICE,
+                COLUMN_PRODUCT_STATUS
+        };
+
+        // sorting orders
+        String sortOrder =
+                COLUMN_PRODUCT_ID + " ASC";
+        List<Product> productsList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // query the Product table
+        Cursor cursor = db.query(TABLE_PRODUCT, //Table to query
+                columns,
+                null,
+                null,
+                null,
+                null,
+                sortOrder);
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Product product = new Product();
+                product.setProduct_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_ID))));
+                product.setName(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_NAME)));
+                product.setBrand(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_BRAND)));
+                product.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_DESCRIPTION)));
+                product.setSubcategoryID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_SUBCATEGORY))));
+                product.setImageURL(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_IMG)));
+                product.setPrice(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_PRICE)));
+                product.setVolume(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_VOLUME)));
+                product.setInStock(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_STATUS))));
+
+                // Adding product record to list
+                productsList.add(product);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        // return product list
+        return productsList;
+    }
+
+    /**
+     * Method to search product by ID
+     * @param id
+     * @return
+     */
+    public Product getProduct(long id) {
+        // get readable database as we are not inserting anything
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_PRODUCT_ID,
+                COLUMN_PRODUCT_NAME,
+                COLUMN_PRODUCT_BRAND,
+                COLUMN_PRODUCT_DESCRIPTION,
+                COLUMN_PRODUCT_SUBCATEGORY,
+                COLUMN_PRODUCT_IMG,
+                COLUMN_PRODUCT_VOLUME,
+                COLUMN_PRODUCT_PRICE,
+                COLUMN_PRODUCT_STATUS
+        };
+
+        // selection criteria
+        String selection = COLUMN_PRODUCT_ID  + "=?";
+
+        // selection argument
+        String[] selectionArgs = {String.valueOf(id)};
+
+        // query to search the product by ID
+        Cursor cursor = db.query(TABLE_PRODUCT, //Table to query
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // prepare Product object
+        Product product = new Product(
+                cursor.getInt(cursor.getColumnIndex(COLUMN_PRODUCT_ID)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_NAME)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_BRAND)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_DESCRIPTION)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_PRODUCT_SUBCATEGORY)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_IMG)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_PRICE)));
+
+        // close the db connection
+        cursor.close();
+
+        return product;
+    }
+
+//    public Cursor fetch_productByName (String productName){
+//        Cursor cursor = db.query(TABLE_PRODUCT, null, COLUMN_PRODUCT_NAME
+//                + "=?", new String[]{productName+""},null,null,null);
+//        if (cursor!=null){
+//            cursor.moveToFirst();
+//        }
+//        return cursor;
+//    }
+
+    /**
+     * Method to update product records
+     * @param product
+     */
+    public void updateProduct(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRODUCT_NAME, product.getName());
+        values.put(COLUMN_PRODUCT_DESCRIPTION, product.getDescription());
+        values.put(COLUMN_PRODUCT_BRAND, product.getBrand());
+        values.put(COLUMN_PRODUCT_SUBCATEGORY, product.getSubcategoryID());
+        values.put(COLUMN_PRODUCT_PRICE, product.getPrice());
+        values.put(COLUMN_PRODUCT_VOLUME, product.getVolume());
+        values.put(COLUMN_PRODUCT_IMG, product.getImageURL());
+        values.put(COLUMN_PRODUCT_STATUS, product.isInStock());
+
+        // updating row
+        db.update(TABLE_PRODUCT, values, COLUMN_PRODUCT_ID + " = ?",
+                new String[]{String.valueOf(product.getProduct_id())});
+        db.close();
+    }
+
+    /**
+     * This method is to delete product record
+     *
+     * @param product
+     */
+    public void deleteUser(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // delete product record by id
+        db.delete(TABLE_PRODUCT, COLUMN_PRODUCT_ID + " = ?",
+                new String[]{String.valueOf(product.getProduct_id())});
+        db.close();
+    }
+
 
     /**
      * Method to check if the customer exists or not
