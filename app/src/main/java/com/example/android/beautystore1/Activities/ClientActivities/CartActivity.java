@@ -25,7 +25,7 @@ public class CartActivity extends MainActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Shopping Bag");
 
-        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.cart_item_layout, productArray,
+        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.layout_cart_item, productArray,
                 priceArray, quantityArray, imgArray);
         listView = findViewById(R.id.listView_cart);
         listView.setAdapter(adapter);

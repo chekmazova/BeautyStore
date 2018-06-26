@@ -1,5 +1,6 @@
 package com.example.android.beautystore1.Activities.ManagementActivities;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class ManageProductsActivity extends AppCompatActivity {
 
     private final AppCompatActivity activity = ManageProductsActivity.this;
-    private EditText product_id, name, brand, description, imageURL, volume, price;
+    private EditText name, brand, description, imageURL, volume, price;
     private Spinner spinner_subcategoryID;
     Button btnRegister, btnView;
 
@@ -71,10 +72,17 @@ public class ManageProductsActivity extends AppCompatActivity {
 
             }
         });
+
+        btnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, ViewProductsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initViews(){
-        product_id = findViewById(R.id.txt_productID);
         name = findViewById(R.id.txt_product_name);
         brand = findViewById(R.id.txt_brand);
         description = findViewById(R.id.txt_description);

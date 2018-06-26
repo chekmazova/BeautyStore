@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent2);
                 break;
             case R.id.menu_staff_login:
-                Intent intent3 = new Intent(getApplicationContext(), ManageStoreInfoActivity.class);
+                Intent intent3 = new Intent(getApplicationContext(), ManageProductsActivity.class);
                 startActivity(intent3);
                 break;
         }

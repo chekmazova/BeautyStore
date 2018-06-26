@@ -27,6 +27,8 @@
         <activity android:name=".Activities.ManagementActivities.ManageProductsActivity" />
         <activity android:name=".Activities.ManagementActivities.ManageStoreInfoActivity" />
         <activity android:name=".Activities.ClientActivities.AccountDetailsActivity" />
+        <activity android:name=".Activities.ManagementActivities.ViewProductsActivity">
+        </activity>
     </application>
 
 </manifest>

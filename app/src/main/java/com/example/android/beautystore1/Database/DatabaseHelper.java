@@ -576,10 +576,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This method is to delete product record
-     *
      * @param product
      */
-    public void deleteUser(Product product) {
+    public void deleteProduct(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
         // delete product record by id
         db.delete(TABLE_PRODUCT, COLUMN_PRODUCT_ID + " = ?",

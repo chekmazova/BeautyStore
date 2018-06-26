@@ -1,10 +1,6 @@
 package com.example.android.beautystore1.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.beautystore1.Activities.ClientActivities.ProductActivity;
 import com.example.android.beautystore1.Database.DatabaseHelper;
-import com.example.android.beautystore1.Models.Product;
 import com.example.android.beautystore1.R;
 import com.squareup.picasso.Picasso;
 
@@ -46,7 +40,7 @@ public class GridAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView==null){
             LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.grid_category_item, null);
+            convertView = inflater.inflate(R.layout.layout_grid_category_item, null);
         }
 
         ImageView imageView = convertView.findViewById(R.id.grdBasic);

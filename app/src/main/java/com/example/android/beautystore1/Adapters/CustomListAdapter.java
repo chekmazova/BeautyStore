@@ -33,7 +33,7 @@ public class CustomListAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = context.getLayoutInflater();
-        View basicView = inflater.inflate(R.layout.cart_item_layout, null, true);
+        View basicView = inflater.inflate(R.layout.layout_cart_item, null, true);
 
         TextView mProduct = basicView.findViewById(R.id.txtProduct);
         TextView mPrice = basicView.findViewById(R.id.txtPrice);
