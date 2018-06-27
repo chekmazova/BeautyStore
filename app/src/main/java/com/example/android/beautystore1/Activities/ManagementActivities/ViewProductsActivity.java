@@ -22,6 +22,7 @@ import com.example.android.beautystore1.Listeners.RecyclerTouchListener;
 import com.example.android.beautystore1.Models.Product;
 import com.example.android.beautystore1.R;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,11 +101,18 @@ public class ViewProductsActivity extends AppCompatActivity {
      * Update product info in db and refresh the productList
      * @param position
      */
-    private void updateProduct (int position) {
+    private void updateProduct (int position, String name, String brand, String description, String imageURL, String volume, String price) {
         Product product = databaseHelper.getProduct(position);
+        //updating Product details on a list
+        product.setName(name);
+        product.setBrand(brand);
+        product.setDescription(description);
+        product.setImageURL(imageURL);
+        product.setPrice(price);
+        product.setVolume(volume);
+
         // updating product in db
         databaseHelper.updateProduct(product);
-
         // refreshing the list
         listProducts.set(position, product);
         productRecyclerAdapter.notifyItemChanged(position);
@@ -170,6 +178,9 @@ public class ViewProductsActivity extends AppCompatActivity {
         volume.setText(product.getVolume());
         price.setText(product.getPrice());
 
+        product = databaseHelper.getProduct(position);
+        product.setName(name.getText().toString());
+
 
         final AlertDialog alertDialog = alertDialogBuilderUserInput.create();
         alertDialog.getWindow().setLayout(1100,1300);
@@ -178,7 +189,8 @@ public class ViewProductsActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateProduct(position);
+                updateProduct(position, name.getText().toString(), brand.getText().toString(), description.getText().toString(),
+                        imageURL.getText().toString(), volume.getText().toString(), price.getText().toString());
                 toastMessage("Product info updated!");
                 alertDialog.dismiss();
             }
