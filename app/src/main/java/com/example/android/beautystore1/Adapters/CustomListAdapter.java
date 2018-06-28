@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.android.beautystore1.Database.DatabaseHelper;
 import com.example.android.beautystore1.Models.Cart;
+import com.example.android.beautystore1.Models.Product;
 import com.example.android.beautystore1.R;
 import com.squareup.picasso.Picasso;
 
@@ -41,7 +43,7 @@ public class CustomListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView==null){
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.layout_cart_item, null);
@@ -50,7 +52,7 @@ public class CustomListAdapter extends BaseAdapter {
         TextView mProduct = convertView.findViewById(R.id.txtProduct);
         TextView mPrice = convertView.findViewById(R.id.txtPrice);
         //TextView mQuantity = basicView.findViewById(R.id.txt_quant);
-        //ElegantNumberButton mQuantity = convertView.findViewById(R.id.number_button);
+        final ElegantNumberButton btnQuantity = convertView.findViewById(R.id.number_button);
         ImageView mImage = convertView.findViewById(R.id.pic_product);
 
         cartItem = databaseHelper.getAllCartLines().get(position);
@@ -61,8 +63,42 @@ public class CustomListAdapter extends BaseAdapter {
                 .into(mImage);
         mProduct.setText(databaseHelper.getProduct(cartItem.getProductID()).getName());
         mPrice.setText("RUR "+ Double.toString(databaseHelper.getProduct(cartItem.getProductID()).getPrice()));
+        btnQuantity.setNumber(cartItem.getQuantity().toString());
 
+        btnQuantity.setOnClickListener(new ElegantNumberButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String quant = btnQuantity.getNumber();
+                if (!quant.equals("0")) {
+                    updateCartLine(position, Integer.parseInt(quant));
+                    toastMessage("Quantity is updated!");
+                } else {
+                    toastMessage("Product deleted from the cart!");
+                }
+            }
+        });
 
         return convertView;
+    }
+
+    private void updateCartLine (int position, int quantity) {
+        Cart cart = databaseHelper.getAllCartLines().get(position);
+        //updating Cart details in a list
+        cart.setQuantity(quantity);
+
+        // updating product in db
+        databaseHelper.updateCartItem(cart);
+
+        // refreshing the list
+        databaseHelper.getAllCartLines().set(position, cart);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * customizable toast
+     * @param message
+     */
+    private void toastMessage (String message){
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

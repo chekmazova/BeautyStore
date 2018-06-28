@@ -58,7 +58,7 @@
                     android:id="@+id/number_button"
                     app:textSize="6sp"
                     app:backGroundColor="@color/colorPrimaryRed"
-                    app:initialNumber="1"
+                    app:initialNumber="0"
                     app:finalNumber="20">
                 </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 

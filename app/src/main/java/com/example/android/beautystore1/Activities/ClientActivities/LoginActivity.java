@@ -51,22 +51,23 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Login to your Account");
 
-        initViews();
-        initObjects();
-
         //get the intent extra from the CategoryActivity
         Intent receivedIntent = getIntent();
 
         //now get the productID we passed as an extra
         customerEmail = receivedIntent.getStringExtra("EMAIL");
 
-        inputEmail.setText(customerEmail);
+        initViews();
+        initObjects();
+
+
 
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 verifyFromSQLite();
+
             }
         });
 
@@ -96,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
     private void initObjects(){
         inputValidation = new InputValidation(this);
         mDatabaseHelper = new DatabaseHelper(this);
+        inputEmail.setText(customerEmail);
     }
 
     /**
@@ -125,7 +127,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if (mDatabaseHelper.checkCustomerExist(email, hashPass)) {
 
-            Intent checkoutIntent = new Intent(activity, CheckoutActivity.class);
+            Intent checkoutIntent = new Intent(activity, CartActivity.class);
+            checkoutIntent.putExtra("Email", email);
             startActivity(checkoutIntent);
         } else {
             // Snack Bar to show success message that record is wrong

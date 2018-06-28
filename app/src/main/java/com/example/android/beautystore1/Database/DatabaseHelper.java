@@ -448,6 +448,130 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Method to search Customer by Email
+     * @param email
+     * @return
+     */
+    public Customer getCustomerByEmail(String email) {
+        // get readable database as we are not inserting anything
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_CUSTOMER_ID,
+                COLUMN_CUSTOMER_FIRST_NAME,
+                COLUMN_CUSTOMER_LAST_NAME,
+                COLUMN_CUSTOMER_PHONE,
+                COLUMN_CUSTOMER_PASSWORD
+        };
+
+        // selection criteria
+        String selection = COLUMN_CUSTOMER_EMAIL  + "=?";
+
+        // selection argument
+        String[] selectionArgs = {email};
+
+        // query to search the product by ID
+        Cursor cursor = db.query(TABLE_CUSTOMER, //Table to query
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // prepare Customer object
+        Customer customer = new Customer(
+                cursor.getInt(cursor.getColumnIndex(COLUMN_CUSTOMER_ID)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_FIRST_NAME)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_LAST_NAME)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_PHONE)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_EMAIL)),
+                cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_PASSWORD)));
+
+        // close the db connection
+        cursor.close();
+
+        return customer;
+    }
+
+    /**
+     * Method to check if the customer exists or not
+     * @param email
+     * @return true/false
+     */
+    public boolean checkEmailExist(String email) {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_CUSTOMER_ID
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // selection criteria
+        String selection = COLUMN_CUSTOMER_EMAIL + " = ?";
+
+        // selection argument
+        String[] selectionArgs = {email};
+
+        // query user table with condition
+        Cursor cursor = db.query(TABLE_CUSTOMER,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        if (cursorCount > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Method to check the customer's email and password match
+     * @param email
+     * @param password
+     * @return true/false
+     */
+    public boolean checkCustomerExist(String email, String password) {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_CUSTOMER_ID
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // selection criteria
+        String selection = COLUMN_CUSTOMER_EMAIL + " = ?" + " AND " + COLUMN_CUSTOMER_PASSWORD + " = ?";
+
+        // selection argument
+        String[] selectionArgs = {email, password};
+
+        // query user table with condition
+        Cursor cursor = db.query(TABLE_CUSTOMER,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        if (cursorCount > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Method to create new product
      * @param product
      * @return
@@ -702,77 +826,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Method to check if the customer exists or not
-     * @param email
-     * @return true/false
+     * Method to change the quantity in a cart line
+     * @param cart
      */
-    public boolean checkEmailExist(String email) {
-        // array of columns to fetch
-        String[] columns = {
-                COLUMN_CUSTOMER_ID
-        };
-        SQLiteDatabase db = this.getReadableDatabase();
+    public void updateCartItem(Cart cart) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-        // selection criteria
-        String selection = COLUMN_CUSTOMER_EMAIL + " = ?";
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CARTLINE_QUANTITY, cart.getQuantity());
 
-        // selection argument
-        String[] selectionArgs = {email};
-
-        // query user table with condition
-        Cursor cursor = db.query(TABLE_CUSTOMER,
-                columns,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null);
-        int cursorCount = cursor.getCount();
-        cursor.close();
+        // updating row
+        db.update(TABLE_CART, values, COLUMN_CARTlINE_ID + " = ?",
+                new String[]{String.valueOf(cart.getCartID())});
         db.close();
-
-        if (cursorCount > 0) {
-            return true;
-        }
-        return false;
     }
 
-    /**
-     * Method to check the customer's email and password match
-     * @param email
-     * @param password
-     * @return true/false
-     */
-    public boolean checkCustomerExist(String email, String password) {
-        // array of columns to fetch
-        String[] columns = {
-                COLUMN_CUSTOMER_ID
-        };
-        SQLiteDatabase db = this.getReadableDatabase();
 
-        // selection criteria
-        String selection = COLUMN_CUSTOMER_EMAIL + " = ?" + " AND " + COLUMN_CUSTOMER_PASSWORD + " = ?";
-
-        // selection argument
-        String[] selectionArgs = {email, password};
-
-        // query user table with condition
-        Cursor cursor = db.query(TABLE_CUSTOMER,
-                columns,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null);
-        int cursorCount = cursor.getCount();
-        cursor.close();
-        db.close();
-
-        if (cursorCount > 0) {
-            return true;
-        }
-        return false;
-    }
 
     /**
      * customizable toast

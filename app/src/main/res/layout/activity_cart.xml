@@ -22,7 +22,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_weight="50" >
+        android:layout_weight="45" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,27 +31,38 @@
             android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView29"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:layout_weight="1"
-                android:text="Subtotal" />
+            <!--<TextView-->
+                <!--android:id="@+id/textView29"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:textColor="@color/colorPrimaryDark"-->
+                <!--android:textStyle="bold"-->
+                <!--android:textAllCaps="true"-->
+                <!--android:layout_weight="1"-->
+                <!--android:textSize="18sp"-->
+                <!--android:text="Subtotal" />-->
 
             <TextView
-                android:id="@+id/textView30"
+                android:id="@+id/txtCartSum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="5"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
                 android:textAllCaps="true"
+                android:textSize="18sp"
                 android:text="SUM" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClickUpdateSUM"
+                android:background="@color/colorWhite"
+                android:text="Refresh" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
