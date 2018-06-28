@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String email;
     String hashPass;
+    String customerEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,15 @@ public class LoginActivity extends AppCompatActivity {
 
         initViews();
         initObjects();
+
+        //get the intent extra from the CategoryActivity
+        Intent receivedIntent = getIntent();
+
+        //now get the productID we passed as an extra
+        customerEmail = receivedIntent.getStringExtra("EMAIL");
+
+        inputEmail.setText(customerEmail);
+
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

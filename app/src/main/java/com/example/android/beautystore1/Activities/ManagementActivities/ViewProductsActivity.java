@@ -98,11 +98,11 @@ public class ViewProductsActivity extends AppCompatActivity {
     }
 
     /**
-     * Update product info in db and refresh the productList
+     * Method to update product info in db and refresh the productList
      * @param position
      */
-    private void updateProduct (int position, String name, String brand, String description, String imageURL, String volume, String price) {
-        Product product = databaseHelper.getProduct(position);
+    private void updateProduct (int position, String name, String brand, String description, String imageURL, String volume, double price) {
+        Product product = databaseHelper.getAllProducts().get(position);
         //updating Product details on a list
         product.setName(name);
         product.setBrand(brand);
@@ -112,13 +112,19 @@ public class ViewProductsActivity extends AppCompatActivity {
         product.setVolume(volume);
 
         // updating product in db
-        databaseHelper.updateProduct(product);
+            databaseHelper.updateProduct(product);
+
+
         // refreshing the list
         listProducts.set(position, product);
         productRecyclerAdapter.notifyItemChanged(position);
     }
 
 
+    /**
+     * Method to remove product from db and listProduct
+     * @param position
+     */
     private void deleteProduct(int position) {
         // deleting the product from db
         databaseHelper.deleteProduct(listProducts.get(position));
@@ -153,7 +159,9 @@ public class ViewProductsActivity extends AppCompatActivity {
     }
 
     /**
-     * Popping out Dialog box
+     * Popping out Dialog box with edit Product function
+     * @param product
+     * @param position
      */
     public void showEditProductDialog (Product product, final int position){
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getApplicationContext());
@@ -176,11 +184,7 @@ public class ViewProductsActivity extends AppCompatActivity {
         description.setText(product.getDescription());
         imageURL.setText(product.getImageURL());
         volume.setText(product.getVolume());
-        price.setText(product.getPrice());
-
-        product = databaseHelper.getProduct(position);
-        product.setName(name.getText().toString());
-
+        price.setText(Double.toString(product.getPrice()));
 
         final AlertDialog alertDialog = alertDialogBuilderUserInput.create();
         alertDialog.getWindow().setLayout(1100,1300);
@@ -189,10 +193,20 @@ public class ViewProductsActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateProduct(position, name.getText().toString(), brand.getText().toString(), description.getText().toString(),
-                        imageURL.getText().toString(), volume.getText().toString(), price.getText().toString());
-                toastMessage("Product info updated!");
-                alertDialog.dismiss();
+                String newName = name.getText().toString();
+                String newBrand = brand.getText().toString();
+                String newDescription = description.getText().toString();
+                String newImageURL = imageURL.getText().toString();
+                String newVolume = volume.getText().toString();
+                double newPrice = Double.parseDouble(price.getText().toString());
+
+                if (!newName.equals("") || !newImageURL.equals("") || newPrice !=0){
+                    updateProduct(position, newName, newBrand, newDescription, newImageURL, newVolume, newPrice);
+                    toastMessage("Product info updated!");
+                    alertDialog.dismiss();
+                }  else {
+                        toastMessage("Error! You must enter product NAME, IMAGE and PRICE");
+                    }
             }
         });
 
@@ -202,13 +216,6 @@ public class ViewProductsActivity extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
-
-
-//        Dialog dialog = new Dialog((this));
-//        dialog.setContentView(R.layout.dialog_edit_product_layout);
-//        dialog.setTitle("Edit Product Info");
-//        dialog.getWindow().setLayout(1100,1300);
-//        dialog.show();
     }
 
     /**

@@ -1,21 +1,33 @@
 package com.example.android.beautystore1.Activities.ClientActivities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.android.beautystore1.Adapters.CustomListAdapter;
+import com.example.android.beautystore1.Adapters.GridAdapter;
+import com.example.android.beautystore1.Database.DatabaseHelper;
+import com.example.android.beautystore1.Models.Cart;
 import com.example.android.beautystore1.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CartActivity extends MainActivity {
-    String[] productArray = {"Turbo Power Twin Turbo 2800", "Pro Thermal Styler"};
-    String[] priceArray = {"1895 RUR", "5505 RUR" };
-    Integer[] quantityArray = {1, 1};
-    Integer[] imgArray = {R.drawable.ic_id1, R.drawable.ic_id4};
+    public Activity activity;
+    DatabaseHelper databaseHelper;
     ListView listView;
+    CustomListAdapter adapter;
+    ElegantNumberButton mQuantity;
+    Button btnCheckout;
+    double finalSum;
+    List<Cart> cartList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,19 +37,27 @@ public class CartActivity extends MainActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Shopping Bag");
 
-        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.layout_cart_item, productArray,
-                priceArray, quantityArray, imgArray);
+        initViews();
+        initObjects();
+
+    }
+
+
+
+    private void initViews(){
         listView = findViewById(R.id.listView_cart);
+        mQuantity = findViewById(R.id.number_button);
+        btnCheckout = findViewById(R.id.btn_checkout);
+    }
+
+    private void initObjects(){
+        activity = this;
+        databaseHelper = new DatabaseHelper(this);
+        adapter = new CustomListAdapter(activity, databaseHelper);
         listView.setAdapter(adapter);
 
-        Button button = findViewById(R.id.btn_checkout);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+        cartList = databaseHelper.getAllCartLines();
+
     }
 
     @Override

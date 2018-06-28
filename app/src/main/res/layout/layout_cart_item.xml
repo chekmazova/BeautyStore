@@ -52,29 +52,39 @@
                     android:text="Price"
                     android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/btn_minus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginRight="10dp"
-                    app:srcCompat="@drawable/ic_btn_minus" />
+                <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/number_button"
+                    app:textSize="6sp"
+                    app:backGroundColor="@color/colorPrimaryRed"
+                    app:initialNumber="1"
+                    app:finalNumber="20">
+                </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
-                <TextView
-                    android:id="@+id/txt_quant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="1" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/btn_minus"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--app:srcCompat="@drawable/ic_btn_minus" />-->
 
-                <ImageView
-                    android:id="@+id/btn_plus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
-                    app:srcCompat="@drawable/ic_btn_plus" />
+                <!--<TextView-->
+                    <!--android:id="@+id/txt_quant"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:text="1" />-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/btn_plus"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginRight="15dp"-->
+                    <!--app:srcCompat="@drawable/ic_btn_plus" />-->
             </LinearLayout>
 
         </LinearLayout>

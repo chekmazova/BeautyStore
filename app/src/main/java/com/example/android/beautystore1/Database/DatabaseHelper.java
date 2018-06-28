@@ -8,14 +8,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.example.android.beautystore1.Models.Cart;
 import com.example.android.beautystore1.Models.Category;
 import com.example.android.beautystore1.Models.Customer;
 import com.example.android.beautystore1.Models.Product;
 import com.example.android.beautystore1.Models.Store;
 import com.example.android.beautystore1.Models.Subcategory;
-import com.example.android.beautystore1.Models.User;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //database name
     private static String DATABASE_NAME = "BeautyStore.db";
     //database version
-    private static int DATABASE_VERSION = 11;
+    private static int DATABASE_VERSION = 12;
 
     //Category table
     private static final String TABLE_CATEGORY = "tbCategory";
@@ -73,6 +72,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PRODUCT_PRICE = "product_price";
     private static final String COLUMN_PRODUCT_STATUS = "product_status";
 
+    //Cart table
+    private static final String TABLE_CART = "tbCart";
+    private static final String COLUMN_CARTlINE_ID = "cartLine_id";
+    private static final String COLUMN_PRODUCT_ID_TO_CART = "cartLine_product_id";
+    private static final String COLUMN_CARTLINE_QUANTITY = "product_quantity";
+
+    //Address table
+    private static final String TABLE_ADDRESS = "tbAddress";
+    private static final String COLUMN_ADDRESS_ID = "address_ID";
+    private static final String COLUMN_ADDRESS_CUSTOMER_ID = "address_customerID";
+    private static final String COLUMN_ADDRESS_LINE_1 = "address_line1";
+    private static final String COLUMN_ADDRESS_LINE_2 = "address_line2";
+    private static final String COLUMN_ADDRESS_CITY = "address_city";
+    private static final String COLUMN_ADDRESS_POSTAL_CODE= "address_postal_code";
+
+    //Order table
+    private static final String TABLE_ORDER = "tbOrder";
+    private static final String COLUMN_ORDER_ID = "order_ID";
+    private static final String COLUMN_ORDER_CUSTOMER_ID = "order_customerID";
+    private static final String COLUMN_ORDER_ADDRESS_ID = "order_addressID";
+    private static final String COLUMN_ORDER_PICKUP = "order_pickup";
+    private static final String COLUMN_ORDER_PAYMENT = "order_payment";
+    private static final String COLUMN_ORDER_SUBTOTAL = "order_subtotal";
+    private static final String COLUMN_ORDER_PROMO = "order_promo";
+    private static final String COLUMN_ORDER_TOTAL= "order_total";
+
+
     //create table sql query
     private String CREATE_CATEGORY_TABLE = "CREATE TABLE " + TABLE_CATEGORY + "("
             + COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_CATEGORY_NAME + " TEXT" + ")";
@@ -99,19 +125,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //OK
 
-    private String CREATE_PRODUCT_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PRODUCT + "("
+    private String CREATE_PRODUCT_TABLE = "CREATE TABLE " + TABLE_PRODUCT + "("
             + COLUMN_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_PRODUCT_NAME + " TEXT,"
             + COLUMN_PRODUCT_BRAND + " TEXT,"+ COLUMN_PRODUCT_DESCRIPTION + " TEXT,"
             + COLUMN_PRODUCT_SUBCATEGORY + " INTEGER,"+ COLUMN_PRODUCT_IMG + " TEXT,"
-            + COLUMN_PRODUCT_VOLUME + " TEXT," + COLUMN_PRODUCT_PRICE + " TEXT,"
+            + COLUMN_PRODUCT_VOLUME + " TEXT," + COLUMN_PRODUCT_PRICE + " FLOAT,"
             + COLUMN_PRODUCT_STATUS + " INTEGER, FOREIGN KEY(" +COLUMN_PRODUCT_SUBCATEGORY +") REFERENCES " +
             TABLE_SUBCATEGORY +"("+ COLUMN_SUBCATEGORY_ID + ") ON UPDATE CASCADE" + ")";
 
 
-//    private static String DATABASE_NAME = "BeautyStore.db";
-//    private static int database_edition = 3;
-//    private static String table_1 = "tbCustomer";
-//    private static String table_2 = "tbProduct";
+    private String CREATE_CART_TABLE = "CREATE TABLE " + TABLE_CART + "("
+            + COLUMN_CARTlINE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_PRODUCT_ID_TO_CART + " INTEGER,"
+            + COLUMN_CARTLINE_QUANTITY + " INTEGER, FOREIGN KEY(" +COLUMN_PRODUCT_ID_TO_CART +") REFERENCES " +
+            TABLE_PRODUCT +"("+ COLUMN_PRODUCT_ID + ") ON UPDATE CASCADE" + ")";
+
+
+    private String CREATE_ADDRESS_TABLE = "CREATE TABLE " + TABLE_ADDRESS + "("
+            + COLUMN_ADDRESS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_ADDRESS_CUSTOMER_ID + " INTEGER,"
+            + COLUMN_ADDRESS_LINE_1 + " TEXT," + COLUMN_ADDRESS_LINE_2 + " TEXT," + COLUMN_ADDRESS_CITY + " TEXT,"
+            + COLUMN_ADDRESS_POSTAL_CODE + " TEXT, FOREIGN KEY(" +COLUMN_ADDRESS_CUSTOMER_ID +") REFERENCES " +
+            TABLE_CUSTOMER +"("+ COLUMN_CUSTOMER_ID + ") ON UPDATE CASCADE" + ")";
+
+
+    private String CREATE_ORDER_TABLE = "CREATE TABLE " + TABLE_ORDER + "("
+            + COLUMN_ORDER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_ORDER_CUSTOMER_ID + " INTEGER,"
+            + COLUMN_ORDER_ADDRESS_ID + " INTEGER," + COLUMN_ORDER_PICKUP + " TEXT," + COLUMN_ORDER_PAYMENT+ " TEXT,"
+            + COLUMN_ORDER_SUBTOTAL + " FLOAT," + COLUMN_ORDER_PROMO + " TEXT," + COLUMN_ORDER_TOTAL + " FLOAT, FOREIGN KEY("
+            +COLUMN_ORDER_CUSTOMER_ID +") REFERENCES " + TABLE_CUSTOMER +"("+ COLUMN_CUSTOMER_ID + ") ON UPDATE CASCADE, "
+            + "FOREIGN KEY(" +COLUMN_ORDER_ADDRESS_ID +") REFERENCES " + TABLE_ADDRESS +"("+ COLUMN_ADDRESS_ID + ") ON UPDATE CASCADE"+ ")";
+
+    //            db.execSQL("create table " + table_10 + "(ID integer PRIMARY KEY AUTOINCREMENT, product_id integer, quantity integer, total_cost money, " +
+//                    "FOREIGN KEY(product_id) REFERENCES  tbProduct (ID) ON UPDATE CASCADE)");
+//            Toast.makeText(context, "CartItem Table CREATED", Toast.LENGTH_SHORT).show();
+
+
+
 //    private static String table_7 = "tbStaff";
 //    private static String table_8 = "tbInventory";
 //    private static String table_9 = "tbPromo";
@@ -150,13 +198,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             toastMessage("Customer Table CREATED");
             db.execSQL(CREATE_PRODUCT_TABLE);
             toastMessage("Product Table CREATED");
+            db.execSQL(CREATE_CART_TABLE);
+            toastMessage("Cart Table CREATED");
+            db.execSQL(CREATE_ADDRESS_TABLE);
+            toastMessage("Address Table CREATED");
+            db.execSQL(CREATE_ORDER_TABLE);
+            toastMessage("Order Table CREATED");
 
 //
-//            db.execSQL("create table " + table_2 + "(ID integer PRIMARY KEY AUTOINCREMENT, product_name varchar(225), brand_id integer, " +
-//                    "subcategory_id integer, description varchar(225), image_URL varchar(225), volume varchar(50), price money, " +
-//                    "status varchar(20), FOREIGN KEY(brand_id) REFERENCES  tbBrand (ID) ON UPDATE CASCADE," +
-//                    "FOREIGN KEY(subcategory_id) REFERENCES  tbSubcategory (ID) ON UPDATE CASCADE)");
-//            Toast.makeText(context, "Product Table CREATED", Toast.LENGTH_SHORT).show();
 //
 //            db.execSQL("create table " + table_7 + "(ID integer PRIMARY KEY AUTOINCREMENT, staff_position varchar(50)," +
 //                    "staff_name varchar(50), staff_surname varchar(50), staff_phone varchar(10), staff_login varchar(10), " +
@@ -174,11 +223,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                    "delivery_price money)");
 //            Toast.makeText(context, "DeliveryType Table CREATED", Toast.LENGTH_SHORT).show();
 //
-//            db.execSQL("create table " + table_1 + "(ID integer PRIMARY KEY AUTOINCREMENT, first_name varchar(50), last_name varchar(50)," +
-//                    "phone_number varchar(10), birth_date date, gender varchar(10), user_name varchar(10), password varchar(10)," +
-//                    "address_id integer, voucher integer, FOREIGN KEY(address_id) REFERENCES  tbAddress (ID) ON UPDATE CASCADE," +
-//                    "FOREIGN KEY(voucher) REFERENCES  tbPromo (ID) ON UPDATE CASCADE)");
-//            Toast.makeText(context, "Customer Table CREATED", Toast.LENGTH_SHORT).show();
 //
 //            db.execSQL("create table " + table_10 + "(ID integer PRIMARY KEY AUTOINCREMENT, product_id integer, quantity integer, total_cost money, " +
 //                    "FOREIGN KEY(product_id) REFERENCES  tbProduct (ID) ON UPDATE CASCADE)");
@@ -230,6 +274,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_VOUCHER);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_CUSTOMER);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_PRODUCT);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_CART);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_ADDRESS);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_ORDER);
 
         onCreate(db);
     }
@@ -471,7 +518,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 product.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_DESCRIPTION)));
                 product.setSubcategoryID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_SUBCATEGORY))));
                 product.setImageURL(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_IMG)));
-                product.setPrice(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_PRICE)));
+                product.setPrice(Double.parseDouble(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_PRICE))));
                 product.setVolume(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_VOLUME)));
                 product.setInStock(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_STATUS))));
 
@@ -534,7 +581,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_DESCRIPTION)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_PRODUCT_SUBCATEGORY)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_IMG)),
-                cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_PRICE)));
+                cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_VOLUME)),
+                cursor.getDouble(cursor.getColumnIndex(COLUMN_PRODUCT_PRICE)));
 
         // close the db connection
         cursor.close();
@@ -576,6 +624,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This method is to delete product record
+     *
      * @param product
      */
     public void deleteProduct(Product product) {
@@ -586,6 +635,71 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    /**
+     * Method to add new line with the chosen product in a cart
+     * @param cart
+     * @return
+     */
+    public boolean addCartLine (Cart cart){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_PRODUCT_ID_TO_CART, cart.getProductID());
+        cv.put(COLUMN_CARTLINE_QUANTITY, cart.getQuantity());
+
+        // Inserting Row
+        Long status = db.insert(TABLE_CART, null, cv);
+        db.close();
+        if (status != -1){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Method to retrieve from DB all products added to the cart
+     * @return
+     */
+    public List<Cart> getAllCartLines() {
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_CARTlINE_ID,
+                COLUMN_PRODUCT_ID_TO_CART,
+                COLUMN_CARTLINE_QUANTITY
+        };
+
+        List<Cart> cartList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // query the Category table
+        Cursor cursor = db.query(TABLE_CART, //Table to query
+                columns,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        // Traversing through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Cart cartline = new Cart();
+                cartline.setCartID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_CARTlINE_ID))));
+                cartline.setProductID(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_PRODUCT_ID_TO_CART))));
+                cartline.setQuantity(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_CARTLINE_QUANTITY))));
+
+                // Adding category record to list
+                cartList.add(cartline);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        // return category list
+        return cartList;
+    }
 
     /**
      * Method to check if the customer exists or not

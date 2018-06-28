@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.beautystore1.Database.DatabaseHelper;
+import com.example.android.beautystore1.Models.Cart;
 import com.example.android.beautystore1.Models.Product;
 import com.example.android.beautystore1.R;
 import com.squareup.picasso.Picasso;
@@ -48,6 +50,7 @@ public class ProductActivity extends MainActivity {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addNewCartLine();
                 customDialog("Item added to cart", "Do you wish to continue shopping?");
                 //Toast.makeText(getApplicationContext(), "Item successfully added to shopping bag", Toast.LENGTH_LONG).show();
             }
@@ -81,11 +84,15 @@ public class ProductActivity extends MainActivity {
                 .into(productIMG);
         productName.setText(selectedProduct.getName());
         productBrand.setText(selectedProduct.getBrand());
-        productPrice.setText(selectedProduct.getPrice());
+        productPrice.setText(Double.toString(selectedProduct.getPrice()));
         productInfo.setText(selectedProduct.getDescription());
     }
 
-    //Function to display dialog box - continue shopping or checkout
+    /**
+     * Method to display dialog box - continue shopping or checkout
+     * @param title
+     * @param message
+     */
     public void customDialog(String title, String message){
         final AlertDialog.Builder builderBox = new AlertDialog.Builder(this);
         builderBox.setTitle(title);
@@ -110,6 +117,23 @@ public class ProductActivity extends MainActivity {
         builderBox.show();
     }
 
+    public void addNewCartLine (){
+        Cart cart = new Cart();
+        cart.setProductID(selectedProduct.getProduct_id());
+        cart.setPrice(selectedProduct.getPrice());
+        cart.setProductIMG(selectedProduct.getImageURL());
+        cart.setProductName(selectedProduct.getName());
+        cart.setQuantity(1);
+
+        databaseHelper.addCartLine(cart);
+
+//        if (status==true){
+//            toastMessage("Product added");
+//        } else{
+//            toastMessage("Error");
+//        }
+    }
+
     //displays return arrow
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -126,5 +150,13 @@ public class ProductActivity extends MainActivity {
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, "Please have a look at this product I would like to buy at the <Piont of Beauty>");
             startActivity(Intent.createChooser(intent, "Share via..."));
+    }
+
+    /**
+     * customizable toast
+     * @param message
+     */
+    private void toastMessage (String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

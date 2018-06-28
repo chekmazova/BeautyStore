@@ -101,7 +101,11 @@ public class ManageProductsActivity extends AppCompatActivity {
 
     }
 
-    public void btnAddSubcategory (View view){
+    /**
+     * Method to add product in database, set onClick in res
+     * @param view
+     */
+    public void btnAddProduct(View view){
         Product product = new Product();
         product.setName(name.getText().toString().trim());
         product.setBrand(brand.getText().toString().trim());
@@ -109,7 +113,7 @@ public class ManageProductsActivity extends AppCompatActivity {
         product.setSubcategoryID(selected_subcatID);
         product.setImageURL(imageURL.getText().toString().trim());
         product.setVolume(volume.getText().toString().trim());
-        product.setPrice(price.getText().toString().trim());
+        product.setPrice(Double.parseDouble(price.getText().toString().trim()));
 
         boolean status = databaseHelper.addProduct(product);
 

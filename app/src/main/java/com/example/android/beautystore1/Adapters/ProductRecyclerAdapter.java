@@ -46,7 +46,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
                 .into(holder.imageViewProduct);
         holder.textViewID.setText(listProducts.get(position).getProduct_id().toString());
         holder.textViewProduct.setText(listProducts.get(position).getName());
-        holder.textViewPrice.setText(listProducts.get(position).getPrice());
+        holder.textViewPrice.setText(Double.toString(listProducts.get(position).getPrice())+"RUR");
     }
 
     @Override

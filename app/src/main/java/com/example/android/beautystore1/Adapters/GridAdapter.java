@@ -57,16 +57,7 @@ public class GridAdapter extends BaseAdapter{
                 .into(imageView);
         mProduct.setText(databaseHelper.getAllProducts().get(position).getName());
         mBrand.setText(databaseHelper.getAllProducts().get(position).getBrand());
-        mPrice.setText(databaseHelper.getAllProducts().get(position).getPrice());
-
-
-//        convertView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, ProductActivity.class);
-//                context.startActivity(intent);
-//            }
-//        });
+        mPrice.setText("RUR "+Double.toString(databaseHelper.getAllProducts().get(position).getPrice()));
 
         return convertView;
     }

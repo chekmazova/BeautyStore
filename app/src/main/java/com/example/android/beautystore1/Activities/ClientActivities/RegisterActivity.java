@@ -154,6 +154,10 @@ public class RegisterActivity extends MainActivity {
             // Snack Bar to show error message that record already exists
             Snackbar.make(nestedScrollView, getString(R.string.error_email_exists), Snackbar.LENGTH_LONG).show();
         }
+
+        Intent intentLogin = new Intent(RegisterActivity.this, LoginActivity.class);
+        intentLogin.putExtra("EMAIL", mEmail);
+        startActivity(intentLogin);
     }
 
     /**
